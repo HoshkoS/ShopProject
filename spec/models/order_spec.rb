@@ -9,7 +9,7 @@ RSpec.describe Order, type: :model do
   end
 
   describe 'associations' do
-    it { is_expected.to have_many(:products) }
-    it { is_expected.to have_many(:product_orders) }
+    it { is_expected.to have_many(:products).through(:product_orders) }
+    it { is_expected.to have_many(:product_orders).dependent(:destroy) }
   end
 end
