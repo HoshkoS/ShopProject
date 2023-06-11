@@ -1,0 +1,12 @@
+<nav class="relative flex flex-wrap items-center justify-between w-full py-2 bg-black shadow-lg text-neutral-200 dark:bg-neutral-600">
+  <div class="flex flex-wrap items-center justify-between w-full px-3">
+    <div class="flex items-center justify-between" id="links">
+      <hr class="h-10 mx-4 border-r border-neutral-500">
+      <%= link_to 'Products', products_path, class: "nav-item" %>
+    </div>
+
+    <%= link_to cart_path do %>
+      <i class="fa fa-solid fa-cart-shopping fa-2x nav-item"></i>
+    <% end %>
+  </div>
+</nav>
