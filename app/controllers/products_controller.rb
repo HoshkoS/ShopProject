@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
     @product = resourse
 
     if @product.update(product_params)
-      redirect_to @product, notice: "Product successfully updated."
+      redirect_to @product, notice: "Product was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -40,6 +40,22 @@ class ProductsController < ApplicationController
 
     @product.destroy
     redirect_to products_url, notice: "Product successfully destroyed."
+  end
+
+  def buy
+    session[:products] = {} unless session[:products]
+    new_product = Products::Buy.new(params:).call
+
+    session[:products] = Session.new(session).add_product(new_product)
+
+    redirect_to products_path, notice: "Product added to cart."
+  end
+
+  def cancel_shipping
+    session[:products] = Session.new(session).delete_product(params[:id])
+    session.delete(:products) if session[:products].empty?
+
+    redirect_to orders_path
   end
 
   private

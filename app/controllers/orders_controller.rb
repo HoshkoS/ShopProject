@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   end
 
   def new
+    redirect_to products_path unless session[:products]
     @order = Order.new
   end
 
@@ -15,11 +16,11 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
-      create_product_orders
-      subtract_balance
+      Orders::CreateProductOrders.new(session[:products], @order).call
+      Products::DecreaseBalance.new(@order).call
 
-      redirect_to order_path(@order), notice: "Order successfully created."
-      session[:products] = {}
+      session.delete(:products)
+      redirect_to order_path(@order), notice: "Order was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +30,7 @@ class OrdersController < ApplicationController
     @order = resourse
 
     if @order.update(order_params)
-      redirect_to @order, notice: "Order successfully updated."
+      redirect_to @order, notice: "Order was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -40,6 +41,14 @@ class OrdersController < ApplicationController
 
     @order.destroy
     redirect_to orders_url, notice: "Order successfully destroyed."
+  end
+
+  def cart
+    return unless session[:products]
+
+    current_session = Session.new(session)
+    @session_products = current_session.products
+    @session_sum = current_session.sum
   end
 
   private
@@ -54,16 +63,5 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:first_name, :last_name, :address, :phone)
-  end
-
-  def create_product_orders
-    session[:products].each { |product_id, amount| @order.product_orders.create(product_id:, amount:) }
-  end
-
-  def subtract_balance
-    @order.products.each do |product|
-      new_balance = product.balance - @order.product_orders.find_by(product_id: product.id).amount
-      product.update(balance: new_balance)
-    end
   end
 end
