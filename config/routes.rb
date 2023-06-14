@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  root "products#index"
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  get "cart", to: "carts#show", as: 'cart'
+  post "products/:id/buy", to: "carts#update", as: 'buy'
+  post "products/:id/change_amount", to: "carts#update", as: 'change_amount'
+  post "products/:id/cancel_delivery", to: "carts#update", as:'cancel_delivery'
+  delete "clean_cart", to: "carts#destroy", as: "clean_cart"
+
+  resources :orders
+  resources :products
 end
