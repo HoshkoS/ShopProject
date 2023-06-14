@@ -43,14 +43,6 @@ class OrdersController < ApplicationController
     redirect_to orders_url, notice: "Order successfully destroyed."
   end
 
-  def cart
-    return unless session[:products]
-
-    current_session = Session.new(session)
-    @session_products = current_session.products
-    @session_sum = current_session.sum
-  end
-
   private
 
   def collection
