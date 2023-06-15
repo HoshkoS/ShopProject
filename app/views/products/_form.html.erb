@@ -1,0 +1,8 @@
+<%= simple_form_for product, defaults: { input_html: { class: 'input-field w-2/3' } } do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.input :price %>
+  <%= f.input :balance %>
+
+  <%= f.button :submit, class: "text-white font-bold rounded-lg px-5 py-2.5 mb-4 bg-amber-600 hover:bg-amber-700 text-base" %>
+<% end %>

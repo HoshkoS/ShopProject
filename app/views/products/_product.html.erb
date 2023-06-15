@@ -1,0 +1,32 @@
+<div class="flex flex-wrap p-2 mx-6 mb-2 border-2 rounded-lg w-80 border-neutral-200">
+  <div class="w-full p-1 md:p-2">
+    <div id="<%= dom_id product %>">
+
+      <div class="grid grid-cols-1 gap-4">
+        <div class="font-semibold text-3xl truncate ...">
+          <%= product.name %>
+        </div>
+
+        <div class="truncate ...">
+          <%= product.description %>
+        </div>
+
+        <div>
+          Price: <%= number_to_currency(product.price, precision: 2) %>
+        </div>
+
+        <div>
+          Available: <%= product.balance %>
+        </div>
+      </div>
+      <div class='mt-4'>
+        <%= link_to "Show this product", product, class:"text-white bg-gray-500 font-medium rounded-lg px-5 py-2.5 text-sm" %>
+      </div>
+      <div class="relative mt-6 mb-3">
+        <% if product.balance.positive? %>
+          <%= render "carts/buy_form", product: product %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

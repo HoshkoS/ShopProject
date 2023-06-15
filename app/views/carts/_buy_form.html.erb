@@ -1,0 +1,5 @@
+<%= form_with url: buy_path(product), method: :post do |form| %>
+  <%= form.hidden_field :update_action, value: 'buy' %>
+  <%= form.number_field :amount, class:'input-field w-24 h-9 inline-block' %>
+  <%= form.submit "Add to cart", class: 'text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg px-5 py-2.5 text-sm' %>
+<% end %>
