@@ -30,7 +30,7 @@ class Cart::Session
     current_session[:products]
   end
 
-  def set_new_amount
+  def change_amount
     set_product
 
     current_session[:products][product[:id]] = product[:amount]

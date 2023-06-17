@@ -34,7 +34,7 @@ class CartsController < ApplicationController
       redirect_to products_path, notice: "Product added to cart."
 
     when 'change'
-      call_session.set_new_amount
+      call_session.change_amount
       redirect_to cart_path, notice: "Amount was changed"
 
     when 'delete'
