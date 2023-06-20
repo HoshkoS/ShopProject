@@ -4,7 +4,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    redirect_to products_path unless session[:products]
+    redirect_to products_path unless session[:products].present?
     @order = Order.new
   end
 
@@ -16,10 +16,8 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
-      Orders::CreateProductOrders.new(session[:products], @order).call
-      Products::DecreaseBalance.new(@order).call
+      Orders::Manager.new(session[:products], @order, session).call
 
-      session.delete(:products)
       redirect_to order_path(@order), notice: "Order was successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -37,10 +35,9 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    @order = resourse
+    resourse.destroy
 
-    @order.destroy
-    redirect_to orders_url, notice: "Order successfully destroyed."
+    redirect_to products_path, notice: "Order successfully destroyed."
   end
 
   private
