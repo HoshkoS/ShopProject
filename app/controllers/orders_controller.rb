@@ -5,6 +5,12 @@ class OrdersController < ApplicationController
 
   def new
     redirect_to products_path unless session[:products].present?
+
+    cart = Cart::Session.new(session, params)
+
+    @session_products = cart.products
+    @session_sum = cart.sum
+
     @order = Order.new
   end
 

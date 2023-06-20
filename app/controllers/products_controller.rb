@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    @products = collection.order(:name)
+    @products = collection.ordered_by_name
   end
 
   def show
