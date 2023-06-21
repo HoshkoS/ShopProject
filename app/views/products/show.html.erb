@@ -10,7 +10,7 @@
       </div>
 
       <div>
-        Price: <%= number_to_currency(@product.price, precision: 2) %>
+        Price: <%= number_to_currency(@product.price, precision: 2, :unit => "₴") %>
       </div>
 
       <div>
