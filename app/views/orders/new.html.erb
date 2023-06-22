@@ -5,26 +5,26 @@
   <table class="min-w-full p-3 my-6 text-sm font-light text-left border-2">
     <thead class="font-medium border-b dark:border-neutral-500">
       <tr>
-        <th scope="col" class="px-6 py-4">Name</th>
-        <th scope="col" class="px-6 py-4">Price</th>
-        <th scope="col" class="px-6 py-4">Amount</th>
-        <th scope="col" class="px-6 py-4">Sum</th>
+        <th scope="col" class="table-item">Name</th>
+        <th scope="col" class="table-item">Price</th>
+        <th scope="col" class="table-item">Amount</th>
+        <th scope="col" class="table-item">Sum</th>
       </tr>
     </thead>
     <tbody>
       <% @cart.items.each do |product| %>
         <tr class="border-b hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
-          <td class="px-6 py-4 whitespace-nowrap"><%= product.name %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= number_to_currency(product.price, :unit => "₴") %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= session.dig(:products, product.id.to_s) %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= number_to_currency(@cart.session_product_sum(product), :unit => "₴") %></td>
+          <td class="table-item "><%= product.name %></td>
+          <td class="table-item "><%= number_to_currency(product.price, :unit => "₴") %></td>
+          <td class="table-item "><%= session.dig(:products, product.id.to_s) %></td>
+          <td class="table-item "><%= number_to_currency(@cart.session_product_sum(product), :unit => "₴") %></td>
         </tr>
       <% end %>
       <tr class="border-b dark:border-neutral-500">
-        <td colspan="3" class="px-6 py-4 font-bold whitespace-nowrap">
+        <td colspan="3" class="table-item font-bold ">
           Total sum
         </td>
-        <td class="px-6 py-4 font-bold whitespace-nowrap"><%= number_to_currency(@cart.sum, :unit => "₴") %></td>
+        <td class="table-item font-bold "><%= number_to_currency(@cart.sum, :unit => "₴") %></td>
       </tr>
     </tbody>
   </table>

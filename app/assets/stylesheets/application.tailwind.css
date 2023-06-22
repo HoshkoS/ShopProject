@@ -23,5 +23,7 @@
   .btn-gray {
     @apply text-white bg-gray-500 font-medium rounded-lg px-5 py-2.5 text-sm;
   }
-
+  .table-item {
+    @apply px-6 py-4;
+  }
 }
