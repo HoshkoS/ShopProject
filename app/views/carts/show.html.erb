@@ -37,11 +37,11 @@
 
           <div>
             <div class="inline-block m-5">
-                <%= link_to 'Pay this order', new_order_path, class: "text-white font-bold rounded-lg px-5 py-2.5 ml-4 bg-amber-600 hover:bg-amber-700 text-base" %>
+                <%= link_to 'Pay this order', new_order_path, class: "btn-amber" %>
             </div>
 
             <div class="inline-block float-right m-5">
-              <%= button_to 'Delete all products', clean_cart_path, method: :delete, class: "text-white bg-gray-500 font-medium rounded-lg px-5 py-2.5 text-sm" %>
+              <%= button_to 'Delete all products', clean_cart_path, method: :delete, class: "btn-gray" %>
             </div>
           </div>
         <% else %>

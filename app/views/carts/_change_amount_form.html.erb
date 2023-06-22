@@ -1,5 +1,5 @@
 <%= form_with url: change_amount_product_path(product), method: :post do |f| %>
   <%= f.hidden_field :update_action, value: 'change' %>
-  <%= f.number_field :amount, class:'input-field w-[100px] h-[37px] inline-block', value:session.dig(:products, product.id.to_s) %>
-  <%= f.submit "Change amount", class:"text-white font-medium rounded-lg px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-sm" %>
+  <%= f.number_field :amount, :min => 1, class:'input-field w-[100px] h-[37px] inline-block', value:session.dig(:products, product.id.to_s) %>
+  <%= f.submit "Change amount", class:"btn-blue" %>
 <% end %>

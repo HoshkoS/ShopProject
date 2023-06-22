@@ -20,12 +20,10 @@
         </div>
       </div>
       <div class='mt-4'>
-        <%= link_to "Show this product", product, class:"text-white bg-gray-500 font-medium rounded-lg px-5 py-2.5 text-sm" %>
+        <%= link_to "Show this product", product, class:"btn-gray" %>
       </div>
       <div class="relative mt-6 mb-3">
-        <% if product.balance.positive? %>
-          <%= render "carts/buy_form", product: product %>
-        <% end %>
+        <%= render "carts/buy_form", product: product %>
       </div>
     </div>
   </div>
