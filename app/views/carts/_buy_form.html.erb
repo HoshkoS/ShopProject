@@ -1,5 +1,5 @@
-<%= form_with url: buy_product_path(product), method: :post do |form| %>
-  <%= form.hidden_field :update_action, value: 'buy' %>
-  <%= form.number_field :amount, :value => 1, class:'input-field w-24 h-9 inline-block' %>
-  <%= form.submit "Add to cart", class: 'text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg px-5 py-2.5 text-sm' %>
+<%= form_with url: buy_product_path(product), method: :post do |f| %>
+  <%= f.hidden_field :update_action, value: 'buy' %>
+  <%= f.number_field :amount, :value => 1, class:'input-field w-24 h-9 inline-block' %>
+  <%= f.submit "Add to cart", class: 'text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg px-5 py-2.5 text-sm' %>
 <% end %>
