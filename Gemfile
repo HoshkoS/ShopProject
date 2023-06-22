@@ -16,8 +16,7 @@ gem "pg", "~> 1.1"
 gem "puma", "~> 5.0"
 
 gem "font-awesome-rails"
-gem 'simple_form'
-gem 'simple_form-tailwind'
+gem 'simple_form', git: 'https://github.com/loqimean/simple_form'
 
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
