@@ -6,6 +6,10 @@ class Order < ApplicationRecord
 
   validates :first_name, :last_name, :address, :phone, presence: true
 
+  def full_name(order)
+    "#{order.first_name} #{order.last_name}"
+  end
+
   def product_sum(product)
     ActiveRecord::Base.connection.execute(
       "SELECT product_orders.amount * products.price AS product_sum

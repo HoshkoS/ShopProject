@@ -18,7 +18,7 @@
                   <td class="px-6 py-4 whitespace-nowrap"><%= product.name %></td>
                   <td class="px-6 py-4 whitespace-nowrap"><%= number_to_currency(product.price, :unit => "₴") %></td>
                   <td class="px-6 py-4 whitespace-nowrap"><%= render "carts/change_amount_form", product: product %></td>
-                  <td class="px-6 py-4 whitespace-nowrap"><%= number_to_currency(session_product_sum(product), :unit => "₴") %></td>
+                  <td class="px-6 py-4 whitespace-nowrap"><%= number_to_currency(@cart.session_product_sum(product), :unit => "₴") %></td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <%= button_to cancel_delivery_product_path(product, update_action: 'delete') do %>
                         <i class="fa fa-regular fa-trash fa-2x"></i>

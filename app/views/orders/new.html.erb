@@ -17,7 +17,7 @@
           <td class="px-6 py-4 whitespace-nowrap"><%= product.name %></td>
           <td class="px-6 py-4 whitespace-nowrap"><%= number_to_currency(product.price, :unit => "₴") %></td>
           <td class="px-6 py-4 whitespace-nowrap"><%= session.dig(:products, product.id.to_s) %></td>
-          <td class="px-6 py-4 whitespace-nowrap"><%= number_to_currency(session_product_sum(product), :unit => "₴") %></td>
+          <td class="px-6 py-4 whitespace-nowrap"><%= number_to_currency(@cart.session_product_sum(product), :unit => "₴") %></td>
         </tr>
       <% end %>
       <tr class="border-b dark:border-neutral-500">
