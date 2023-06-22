@@ -41,8 +41,8 @@ class Cart::Session
     set_product
 
     if session[:products].key?(product[:id])
-      amount = amount_greater_balance? ? product_balance: product[:amount]
-      session[:products][product[:id]] += amount
+      amount = amount_greater_balance? ? product_balance: session[:products][product[:id]] + product[:amount]
+      session[:products][product[:id]] = amount
     else
       @session[:products].merge!(product[:id] => product[:amount])
     end

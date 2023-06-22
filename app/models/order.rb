@@ -6,8 +6,8 @@ class Order < ApplicationRecord
 
   validates :first_name, :last_name, :address, :phone, presence: true
 
-  def full_name(order)
-    "#{order.first_name} #{order.last_name}"
+  def full_name
+    "#{first_name} #{last_name}"
   end
 
   def product_sum(product)
@@ -17,7 +17,7 @@ class Order < ApplicationRecord
       JOIN products ON products.id = product_orders.product_id
       WHERE product_orders.order_id = #{id}
       AND product_orders.product_id = #{product.id};"
-    )
+    )[0]['product_sum']
   end
 
   def product_amount(product)
@@ -30,6 +30,6 @@ class Order < ApplicationRecord
       FROM product_orders
       JOIN products ON products.id = product_orders.product_id
       WHERE product_orders.order_id = #{id};"
-    )
+    )[0]['total_sum']
   end
 end
