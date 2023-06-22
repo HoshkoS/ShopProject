@@ -1,15 +1,11 @@
 class OrdersController < ApplicationController
+  before_action :check_cart, only: :new
   def show
     @order = resourse
   end
 
   def new
-    redirect_to products_path unless session[:products].present?
-
-    cart = Cart::Session.new(session, params)
-
-    @session_products = cart.products
-    @session_sum = cart.sum
+    @cart = Cart::Session.new(session, params)
 
     @order = Order.new
   end
@@ -58,5 +54,9 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(:first_name, :last_name, :address, :phone)
+  end
+
+  def check_cart
+    redirect_to products_path unless session[:products].present?
   end
 end

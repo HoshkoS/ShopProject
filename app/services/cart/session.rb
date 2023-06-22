@@ -1,23 +1,43 @@
 class Cart::Session
   attr_reader :current_session, :params, :product, :product_balance
+  attr_accessor :notice
 
   def initialize(current_session, params = {})
     @current_session = current_session
     @params = params
   end
 
-  def products
-    current_session[:products].keys.map { |id| Product.find(id) }
+  def call
+    case params[:update_action]
+
+    when 'buy'
+      add_product
+      "Product added to cart."
+
+    when 'change'
+      change_amount
+      "Amount was changed"
+
+    when 'delete'
+      delete_product
+      "Product was removed"
+    end
+  end
+
+  def items
+    Product.find(current_session[:products].keys)
   end
 
   def sum
-    products.map { |product| current_session[:products][product.id.to_s] * product.price }.sum
+    items.map { |product| current_session[:products][product.id.to_s] * product.price }.sum
   end
+
+  private
 
   def add_product
     set_product
 
-    if current_session[:products].has_key?(product[:id])
+    if current_session[:products].key?(product[:id])
       if amount_greater_balance?
         current_session[:products][product[:id]] = product_balance
       else
@@ -26,23 +46,17 @@ class Cart::Session
     else
       @current_session[:products].merge!(product[:id] => product[:amount])
     end
-
-    current_session[:products]
   end
 
   def change_amount
     set_product
 
     current_session[:products][product[:id]] = product[:amount]
-    current_session[:products]
   end
 
   def delete_product
     current_session[:products].delete(params[:id])
-    current_session[:products]
   end
-
-  private
 
   def set_product
     @product = {
@@ -52,7 +66,6 @@ class Cart::Session
 
     @product_balance = Product.find(product[:id].to_i).balance
 
-    product[:amount] = 1 if product[:amount].blank? || product[:amount] <= 0
     product[:amount] = product_balance if product_balance < product[:amount]
   end
 

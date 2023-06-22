@@ -39,6 +39,7 @@ class ProductsController < ApplicationController
     @product = resourse
 
     @product.destroy
+
     redirect_to products_url, notice: "Product successfully destroyed."
   end
 
