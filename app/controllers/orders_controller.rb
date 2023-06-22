@@ -45,7 +45,7 @@ class OrdersController < ApplicationController
   private
 
   def collection
-    Order.all
+    Order.all.ordered
   end
 
   def resourse
