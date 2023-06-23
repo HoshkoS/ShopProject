@@ -35,6 +35,7 @@ class Cart::Session
   def session_product_sum(product)
     session.dig(:products, product.id.to_s) * product.price
   end
+
   private
 
   def add_product
@@ -44,7 +45,7 @@ class Cart::Session
       amount = amount_greater_balance? ? product_balance: session[:products][product[:id]] + product[:amount]
       session[:products][product[:id]] = amount
     else
-      @session[:products].merge!(product[:id] => product[:amount])
+      @session[:products] = @session[:products].merge(product[:id] => product[:amount])
     end
   end
 
@@ -64,7 +65,7 @@ class Cart::Session
       amount: params[:amount].to_i
     }
 
-    @product_balance = Product.find(product[:id].to_i).balance
+    @product_balance = Product.find(product[:id]).balance
 
     product[:amount] = product_balance if product_balance < product[:amount]
   end

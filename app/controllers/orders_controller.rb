@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :check_cart, only: :new
+
   def show
     @order = resourse
   end
