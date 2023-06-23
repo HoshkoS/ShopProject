@@ -32,7 +32,7 @@ class Cart::Session
     items.map { |product| session[:products][product.id.to_s] * product.price }.sum
   end
 
-  def session_product_sum(product)
+  def product_sum(product)
     session.dig(:products, product.id.to_s) * product.price
   end
 

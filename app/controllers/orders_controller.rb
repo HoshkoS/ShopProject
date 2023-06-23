@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @cart = Cart::Session.new(session, params)
+    @session_manager = Cart::Session.new(session, params)
 
     @order = Order.new
   end
