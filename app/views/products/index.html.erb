@@ -1,10 +1,10 @@
 <div class="flex flex-col items-center w-full">
-  <div class="flex items-center justify-between">
+  <div class="flex items-center">
     <h1 class="p-5 text-4xl">Products</h1>
     <%= link_to 'New product', new_product_path, class: "btn-amber" %>
   </div>
   <div class="container px-5 py-2 mx-auto">
-    <div class="inline-grid grid-cols-4 md:-m-2">
+    <div class="flex flex-row flex-wrap md:-m-2">
       <%= render @products %>
     </div>
   </div>

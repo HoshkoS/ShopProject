@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "products#index"
 
-  resources :products, only: [:index, :show] do
+  resources :products, only: [:index, :show, :new, :edit, :destroy] do
     member do
       post :buy, to: "carts#update", as: "buy"
       post :change_amount, to: "carts#update", as: "change_amount"
@@ -13,5 +13,4 @@ Rails.application.routes.draw do
   delete "clean_cart", to: "carts#destroy", as: "clean_cart"
 
   resources :orders
-  resources :products
 end
