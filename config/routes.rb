@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "products#index"
 
-  resources :products, only: [:index, :show, :new, :edit, :destroy] do
+  resources :products, only: [:index, :show, :new, :edit, :update, :destroy] do
     member do
       post :buy, to: "carts#update", as: "buy"
       post :change_amount, to: "carts#update", as: "change_amount"

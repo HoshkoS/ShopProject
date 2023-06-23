@@ -9,7 +9,6 @@ class Orders::Manager
   def call
     @products_hash.each do |product_id, amount|
       product = Product.find(product_id)
-      amount = [amount, product.balance].min
 
       @order.product_orders.create(product_id:, amount:)
     end
