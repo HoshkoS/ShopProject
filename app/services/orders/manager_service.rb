@@ -1,4 +1,4 @@
-class Orders::Manager
+class Orders::ManagerService
 
   def initialize(products_hash, order, current_session)
     @products_hash = products_hash

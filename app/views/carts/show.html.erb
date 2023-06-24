@@ -18,19 +18,19 @@
                   <td class="table-item"><%= product.name %></td>
                   <td class="table-item"><%= number_to_currency(product.price, :unit => "₴") %></td>
                   <td class="table-item"><%= render "carts/change_amount_form", product: product %></td>
-                  <td class="table-item"><%= number_to_currency(@cart.session_product_sum(product), :unit => "₴") %></td>
+                  <td class="table-item"><%= number_to_currency(@cart.product_sum(product), :unit => "₴") %></td>
                   <td class="table-item">
-                    <%= button_to cancel_delivery_product_path(product, update_action: 'delete') do %>
+                    <%= button_to remove_product_in_cart_path(product, update_action: 'delete'), method: :patch do %>
                         <i class="fa fa-regular fa-trash fa-2x"></i>
                     <% end %>
                   </td>
                 </tr>
               <% end %>
               <tr class="border-b dark:border-neutral-500">
-                <td colspan="3" class="table-item font-bold">
+                <td colspan="3" class="font-bold table-item">
                   Total sum
                 </td>
-                <td class="table-item font-bold"><%= number_to_currency(@cart.sum, :unit => "₴") %></td>
+                <td class="font-bold table-item"><%= number_to_currency(@cart.sum, :unit => "₴") %></td>
               </tr>
             </tbody>
           </table>

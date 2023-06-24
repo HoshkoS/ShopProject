@@ -2,7 +2,7 @@ class CartsController < ApplicationController
   before_action :init_cart, only: :update
 
   def show
-    @cart = Cart::Session.new(session, cart_params)
+    @cart = Cart::ManagerService.new(session, cart_params)
   end
 
   def create
@@ -10,7 +10,7 @@ class CartsController < ApplicationController
   end
 
   def update
-    notice = Cart::Session.new(session, params).call
+    notice = Cart::ManagerService.new(session, params).call
 
     redirect_back fallback_location: root_path, notice: notice
   end

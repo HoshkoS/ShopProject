@@ -1,4 +1,4 @@
-class Cart::Session
+class Cart::ManagerService
   attr_reader :session, :params, :product, :product_balance
   attr_accessor :notice
 
@@ -8,19 +8,18 @@ class Cart::Session
   end
 
   def call
+    set_product
+
     case params[:update_action]
 
     when 'buy'
-      add_product
-      "Product added to cart."
+      Cart::AddService.new(session, product).call
 
     when 'change'
-      change_amount
-      "Amount was changed"
+      Cart::ChangeAmountService.new(session, product).call
 
     when 'delete'
-      delete_product
-      "Product was removed"
+      Cart::RemoveService.new(session, product).call
     end
   end
 
@@ -38,27 +37,6 @@ class Cart::Session
 
   private
 
-  def add_product
-    set_product
-
-    if session[:products].key?(product[:id])
-      amount = amount_greater_balance? ? product_balance: session[:products][product[:id]] + product[:amount]
-      session[:products][product[:id]] = amount
-    else
-      @session[:products] = @session[:products].merge(product[:id] => product[:amount])
-    end
-  end
-
-  def change_amount
-    set_product
-
-    session[:products][product[:id]] = product[:amount]
-  end
-
-  def delete_product
-    session[:products].delete(params[:id])
-  end
-
   def set_product
     @product = {
       id: params[:id],
@@ -68,9 +46,5 @@ class Cart::Session
     @product_balance = Product.find(product[:id]).balance
 
     product[:amount] = product_balance if product_balance < product[:amount]
-  end
-
-  def amount_greater_balance?
-    product_balance < (product[:amount] + session[:products][product[:id]])
   end
 end

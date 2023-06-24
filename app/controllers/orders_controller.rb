@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @session_manager = Cart::Session.new(session, params)
+    @session_manager = Cart::ManagerService.new(session, params)
 
     @order = Order.new
   end
@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
-      Orders::Manager.new(session[:products], @order, session).call
+      Orders::ManagerService.call(session[:products], @order, session)
 
       redirect_to order_path(@order), notice: "Order was successfully created."
     else
