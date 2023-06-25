@@ -3,16 +3,16 @@
     <div id="<%= dom_id product %>">
 
       <div class="grid grid-cols-1 gap-4">
-        <div class="font-semibold text-3xl truncate ...">
+        <div class="text-3xl font-semibold line-clamp-1">
           <%= product.name %>
         </div>
 
-        <div class="truncate ...">
+        <div class="line-clamp-1">
           <%= product.description %>
         </div>
 
         <div>
-          Price: <%= number_to_currency(product.price, :unit => "₴") %>
+          Price: <%= number_to_currency(product.price, unit: "₴") %>
         </div>
 
         <div>
@@ -22,9 +22,11 @@
       <div class='mt-4'>
         <%= link_to "Show this product", product, class:"btn-gray" %>
       </div>
-      <div class="relative mt-6 mb-3">
-        <%= render "carts/buy_form", product: product %>
-      </div>
+      <% if product.balance.nonzero? %>
+        <div class="relative mt-6 mb-3">
+          <%= render "carts/buy_form", product: product %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
