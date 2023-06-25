@@ -8,6 +8,5 @@ class Cart::RemoveService
 
   def call
     session[:products].delete(product[:id])
-    "The product was removed from cart"
   end
 end

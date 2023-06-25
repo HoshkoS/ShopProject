@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
   private
 
   def collection
-    Product.all.ordered
+    Product.ordered
   end
 
   def resourse

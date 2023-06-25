@@ -8,6 +8,5 @@ class Cart::ChangeAmountService
 
   def call
     session[:products][product[:id]] = product[:amount]
-    "Amount of product was changed"
   end
 end

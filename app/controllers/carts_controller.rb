@@ -5,10 +5,6 @@ class CartsController < ApplicationController
     @cart = Cart::ManagerService.new(session, cart_params)
   end
 
-  def create
-    session[:products] = {}
-  end
-
   def update
     notice = Cart::ManagerService.new(session, params).call
 
@@ -24,7 +20,7 @@ class CartsController < ApplicationController
   private
 
   def init_cart
-    create unless session[:products].present?
+    session[:products] = {} if session[:products].blank?
   end
 
   def cart_params

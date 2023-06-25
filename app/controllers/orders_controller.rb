@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.save
-      Orders::ManagerService.call(session[:products], @order, session)
+      Orders::ManagerService.new(session[:products], @order, session).call
 
       redirect_to order_path(@order), notice: "Order was successfully created."
     else
@@ -46,7 +46,7 @@ class OrdersController < ApplicationController
   private
 
   def collection
-    Order.all.ordered
+    Order.ordered
   end
 
   def resourse
@@ -58,6 +58,6 @@ class OrdersController < ApplicationController
   end
 
   def check_cart
-    redirect_to products_path unless session[:products].present?
+    redirect_to products_path, notice: "Your cart is empty yet" if session[:products].blank?
   end
 end

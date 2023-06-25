@@ -7,21 +7,20 @@ class Orders::ManagerService
   end
 
   def call
-    @products_hash.each do |product_id, amount|
-      product = Product.find(product_id)
-
-      @order.product_orders.create(product_id:, amount:)
+    product_orders = @products_hash.map do |product_id, amount|
+      { product_id: product_id.to_i, amount: amount, order_id: @order.id }
     end
 
+    ProductOrder.insert_all(product_orders)
+
     @order.products.each do |product|
-      ActiveRecord::Base.connection.execute(
-        "UPDATE products SET balance = balance - (
+      Product.where(id: product.id).update_all(
+        "balance = balance - (
           SELECT amount
           FROM product_orders
           WHERE product_orders.order_id = #{@order.id}
           AND product_orders.product_id = #{product.id}
-        )
-        WHERE id = #{product.id};"
+        )"
       )
     end
 

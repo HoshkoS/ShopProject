@@ -1,5 +1,5 @@
 class Cart::AddService
-  attr_reader :session, :product, :product_balance
+  attr_reader :session, :product
 
   def initialize(session, params = {})
     @session = session
@@ -8,17 +8,11 @@ class Cart::AddService
 
   def call
     if session[:products].key?(product[:id])
-      amount = amount_greater_balance? ? product_balance: session[:products][product[:id]] + product[:amount]
-      session[:products][product[:id]] = amount
+      amount = session.dig(:products, product[:id]) + product[:amount]
+
+      session[:products][product[:id]] = [product[:balance], amount].min
     else
       @session[:products] = @session[:products].merge(product[:id] => product[:amount])
     end
-    "Product was added to a cart"
-  end
-
-  private
-
-  def amount_greater_balance?
-    product_balance < (product[:amount] + session[:products][product[:id]])
   end
 end
