@@ -20,7 +20,7 @@ class Cart::ManagerService
 
     service.new(session, product).call
 
-    "Product #{params[:update_action]} in cart"
+    "Product #{params[:update_action].sub('_', ' ')} in cart"
   end
 
   def get_items
