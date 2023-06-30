@@ -1,8 +1,8 @@
-<%= simple_form_for product do |f| %>
+<%= simple_form_for product, url: products_path, method: :post  do |f| %>
   <%= f.input :name %>
   <%= f.input :description %>
   <%= f.input :price %>
   <%= f.input :balance %>
 
-  <%= f.button :submit, class: "btn-amber" %>
+  <%= f.button :submit, "Create product", class: 'btn-amber  mb-3' %>
 <% end %>

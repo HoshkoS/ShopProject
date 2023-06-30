@@ -1,7 +1,8 @@
-<%= simple_form_for order do |f| %>
+<%= simple_form_for order, url: orders_path, method: :post  do |f| %>
   <%= f.input :first_name %>
   <%= f.input :last_name %>
   <%= f.input :address %>
   <%= f.input :phone %>
-  <%= f.button :submit, class: 'btn-amber' %>
+
+  <%= f.button :submit, "Create order", class: 'btn-amber  mb-3' %>
 <% end %>
