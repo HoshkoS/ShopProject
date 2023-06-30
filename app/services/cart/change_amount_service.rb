@@ -7,6 +7,6 @@ class Cart::ChangeAmountService
   end
 
   def call
-    session[:products][product[:id]] = new_amount
+    session[:products][product[:id]] = product[:amount]
   end
 end
