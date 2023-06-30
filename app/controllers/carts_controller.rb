@@ -1,14 +1,14 @@
 class CartsController < ApplicationController
-  before_action :init_cart, only: :update
+  before_action :init_cart
 
   def show
     @cart = Cart::ManagerService.new(session, cart_params)
   end
 
   def update
-    notice = Cart::ManagerService.new(session, params).call
+    Cart::ManagerService.new(session, params).handle_update
 
-    redirect_back fallback_location: root_path, notice: notice
+    redirect_back fallback_location: root_path, notice: "Product #{params[:update_action].sub('_', ' ')} in cart"
   end
 
   def destroy

@@ -7,20 +7,17 @@ class Cart::ManagerService
     @params = params
   end
 
-  def call
+  def handle_update
     product = {
       id: params[:id],
       amount: params[:amount].to_i,
       balance: Product.find(params[:id]).balance
     }
-
-    product[:amount] = product[:balance] if product[:balance] < product[:amount]
+    new_amount = [product[:balance], product[:amount]].min
 
     service = "Cart::#{params[:update_action].classify}Service".constantize
 
     service.new(session, product).call
-
-    "Product #{params[:update_action].sub('_', ' ')} in cart"
   end
 
   def get_items

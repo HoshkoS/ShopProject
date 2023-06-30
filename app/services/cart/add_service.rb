@@ -8,9 +8,9 @@ class Cart::AddService
 
   def call
     if session[:products].key?(product[:id])
-      amount = session.dig(:products, product[:id]) + product[:amount]
+      new_amount = session.dig(:products, product[:id]) + product[:amount]
 
-      session[:products][product[:id]] = [product[:balance], amount].min
+      session[:products][product[:id]] = [product[:balance], new_amount].min
     else
       @session[:products] = @session[:products].merge(product[:id] => product[:amount])
     end
