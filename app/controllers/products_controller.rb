@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
     @product = resourse
 
     if @product.update(product_params)
-      redirect_to @product, notice: "Product was successfully updated."
+      redirect_to @product, notice: "Product successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end

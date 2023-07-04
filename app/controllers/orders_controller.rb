@@ -1,13 +1,11 @@
 class OrdersController < ApplicationController
-  before_action :check_cart, only: :new
+  before_action :check_cart, only: [:new, :create]
 
   def show
     @order = resourse
   end
 
   def new
-    @session_manager = Cart::ManagerService.new(session, params)
-
     @order = Order.new
   end
 
@@ -59,5 +57,7 @@ class OrdersController < ApplicationController
 
   def check_cart
     redirect_to products_path, notice: "Your cart is empty yet" if session[:products].blank?
+
+    @session_manager = Cart::ManagerService.new(session, params)
   end
 end

@@ -8,5 +8,6 @@ class Cart::RemoveService
 
   def call
     session[:products].delete(product[:id])
+    session.delete(:products) if session[:products].empty?
   end
 end
