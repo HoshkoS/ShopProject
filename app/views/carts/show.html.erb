@@ -13,7 +13,7 @@
               </tr>
             </thead>
             <tbody>
-              <% @cart.get_items.each do |product| %>
+              <% @cart.get_realised_items.each do |product| %>
                 <tr class="border-b hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-600">
                   <td class="table-item"><%= product.name %></td>
                   <td class="table-item"><%= number_to_currency(product.price, unit: "₴") %></td>

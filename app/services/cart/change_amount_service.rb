@@ -7,6 +7,8 @@ class Cart::ChangeAmountService
   end
 
   def call
-    session[:products][product[:id]] = product[:amount]
+    new_amount = [product[:balance], product[:amount]].min
+
+    session[:products] = session[:products].merge(product[:id] => new_amount)
   end
 end

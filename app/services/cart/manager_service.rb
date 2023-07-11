@@ -13,19 +13,19 @@ class Cart::ManagerService
       amount: params[:amount].to_i,
       balance: Product.find(params[:id]).balance
     }
-    new_amount = [product[:balance], product[:amount]].min
+    action = params[:update_action].classify
 
-    service = "Cart::#{params[:update_action].classify}Service".constantize
+    service = "Cart::#{action}Service".constantize
 
     service.new(session, product).call
   end
 
-  def get_items
+  def get_realised_items
     Product.find(session[:products].keys)
   end
 
   def sum
-    get_items.sum { |product| product.price * session.dig(:products, product.id.to_s) }
+    get_realised_items.sum { |product| product.price * session.dig(:products, product.id.to_s) }
   end
 
   def product_sum(product)
