@@ -1,6 +1,5 @@
 class Cart::ManagerService
   attr_reader :session, :params
-  attr_accessor :notice
 
   def initialize(session, params = {})
     @session = session
