@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ShopProject</title>
+    <title>Shop Project</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -9,11 +9,19 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "delete_confirmation" %>
+
+    <script src="https://kit.fontawesome.com/c34a6ab486.js" crossorigin="anonymous"></script>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
+  <body class="flex flex-col min-h-screen">
+    <%= render 'layouts/header' %>
+    <%= render 'shared/flash_messages' %>
+
+    <div class="flex-grow">
       <%= yield %>
-    </main>
+    </div>
+
+    <%= render 'layouts/footer' %>
   </body>
 </html>

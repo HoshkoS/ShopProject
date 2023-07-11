@@ -5,4 +5,10 @@ FactoryBot.define do
     price { Faker::Number.decimal(l_digits: 2) }
     balance { Faker::Number.between(from: 1, to: 10) }
   end
+
+  trait :invalid_product do
+    name { nil }
+    price { nil }
+    balance { nil }
+  end
 end

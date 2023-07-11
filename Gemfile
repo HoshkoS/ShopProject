@@ -15,6 +15,9 @@ gem "pg", "~> 1.1"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
+gem "font-awesome-rails"
+gem 'simple_form', git: 'https://github.com/loqimean/simple_form'
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
@@ -39,9 +42,9 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rspec-rails", ">= 6.0.0"
   gem 'shoulda-matchers', '~> 5.0'
+  gem "rails-controller-testing"
 end
 
 group :development do
   gem "web-console"
 end
-

@@ -5,4 +5,11 @@ FactoryBot.define do
     address { Faker::Address.street_address }
     phone { Faker::PhoneNumber.cell_phone_in_e164 }
   end
+
+  trait :invalid_order do
+    first_name { nil }
+    last_name { nil }
+    address { nil }
+    phone { nil }
+  end
 end
