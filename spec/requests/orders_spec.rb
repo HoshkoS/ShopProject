@@ -18,34 +18,45 @@ RSpec.describe OrdersController, type: :request do
   end
 
   describe 'GET #new' do
-    it 'sets products and initializes a new order' do
-      patch add_product_in_cart_path(product)
-      get new_order_path
+    context 'with empty cart' do
+      it 'shows the notice and redirects to products_path' do
+        get new_order_path
 
-      expect(response).to be_successful
-      expect(response).to render_template(:new)
-      expect(response.body).to include("Create your order")
+        expect(response).to redirect_to(products_path)
+        expect(flash[:notice]).to eq("Your cart is empty yet")
+      end
+    end
+
+    context 'with product in cart' do
+      it 'sets products and initializes a new order' do
+        patch add_product_in_cart_path(product)
+        get new_order_path
+
+        expect(response).to be_successful
+        expect(response).to render_template(:new)
+        expect(response.body).to include("Create your order")
+      end
     end
   end
 
   describe 'POST #create' do
+    before do
+      patch add_product_in_cart_path(product)
+    end
+
     context 'with valid order params' do
       it 'creates a new order and redirects to order page' do
-        patch add_product_in_cart_path(product)
-
         expect do
           post orders_path, params: valid_order_params
         end.to change(Order, :count).by(1)
 
         expect(response).to redirect_to(order_path(Order.last))
-        expect(flash[:notice]).to eq('Something went wrong')
+        expect(flash[:notice]).to eq("Order was successfully created")
       end
     end
 
     context 'with invalid order params' do
       it 'renders the new template with unprocessable entity status' do
-        patch add_product_in_cart_path(product)
-
         post orders_path, params: invalid_order_params
 
         expect(response).to be_unprocessable
