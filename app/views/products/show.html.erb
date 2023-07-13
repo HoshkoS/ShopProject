@@ -2,19 +2,19 @@
   <div class="w-full p-1 m-5 md:p-2">
     <div class="grid grid-cols-1 gap-4">
       <div class="text-3xl font-semibold text-center">
-        <%= @product.name %>
+        <p><%= @product.name %></p>
       </div>
 
       <div>
-        <%= @product.description %>
+        <p><%= @product.description %></p>
       </div>
 
       <div>
-        Price: <%= number_to_currency(@product.price, unit: "₴") %>
+        <p>Price: <%= number_to_currency(@product.price, unit: "₴") %></p>
       </div>
 
       <div>
-        Available: <%= @product.balance %>
+        <p>Available: <%= @product.balance %></p>
       </div>
     </div>
 
@@ -22,14 +22,6 @@
       <% if @product.balance.nonzero? %>
         <%= render "carts/buy_form", product: @product %>
       <% end %>
-    </div>
-
-    <div class="inline-block">
-    <%= link_to 'Edit this product', edit_product_path(@product), class: "btn-gray" %>
-    </div>
-
-    <div class="inline-block ml-2">
-      <%= button_to "Delete this product", product_path(@product), method: :delete, form_class: 'delete-alertbox', class: "btn-gray" %>
     </div>
 
     <div class="inline-block ml-2">

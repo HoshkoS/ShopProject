@@ -1,10 +1,10 @@
 class Order < ApplicationRecord
-  scope :ordered, -> { order(last_name: :asc) }
-
   has_many :product_orders, dependent: :destroy
   has_many :products, through: :product_orders
 
   validates :first_name, :last_name, :address, :phone, presence: true
+
+  scope :ordered, -> { order(last_name: :asc) }
 
   def full_name
     "#{first_name} #{last_name}"

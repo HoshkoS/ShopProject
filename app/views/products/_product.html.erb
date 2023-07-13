@@ -3,19 +3,19 @@
     <div id="<%= dom_id(product) %>">
       <div class="grid grid-cols-1 gap-4">
         <div class="text-3xl font-semibold line-clamp-1">
-          <%= product.name %>
+          <p><%= product.name %></p>
         </div>
 
         <div class="line-clamp-1">
-          <%= product.description %>
+          <p><%= product.description %></p>
         </div>
 
         <div>
-          Price: <%= number_to_currency(product.price, unit: "₴") %>
+          <p>Price: <%= number_to_currency(product.price, unit: "₴") %></p>
         </div>
 
         <div>
-          Available: <%= product.balance %>
+          <p> Available: <%= product.balance %></p>
         </div>
       </div>
       <div class='mt-4'>

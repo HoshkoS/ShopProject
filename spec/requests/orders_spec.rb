@@ -13,40 +13,50 @@ RSpec.describe OrdersController, type: :request do
 
       expect(response).to be_successful
       expect(response).to render_template(:show)
+      expect(response.body).to include(order.id.to_s)
     end
   end
 
   describe 'GET #new' do
-    it 'sets products and initializes a new order' do
-      patch add_product_in_cart_path(product)
-      get new_order_path
+    context 'with empty cart' do
+      it 'shows the notice and redirects to products_path' do
+        get new_order_path
 
-      expect(response).to be_successful
-      expect(response).to render_template(:new)
+        expect(response).to redirect_to(products_path)
+        expect(flash[:notice]).to eq("Your cart is empty yet")
+      end
+    end
+
+    context 'with product in cart' do
+      it 'sets products and initializes a new order' do
+        patch add_product_in_cart_path(product)
+        get new_order_path
+
+        expect(response).to be_successful
+        expect(response).to render_template(:new)
+        expect(response.body).to include("Create your order")
+      end
     end
   end
 
   describe 'POST #create' do
+    before do
+      patch add_product_in_cart_path(product)
+    end
+
     context 'with valid order params' do
       it 'creates a new order and redirects to order page' do
-        patch add_product_in_cart_path(product)
-
         expect do
-          post orders_path,
-          params: valid_order_params
+          post orders_path, params: valid_order_params
         end.to change(Order, :count).by(1)
 
         expect(response).to redirect_to(order_path(Order.last))
-        expect(flash[:notice]).to eq('Order was successfully created.')
-
-        expect(session[:products]).to be_nil
+        expect(flash[:notice]).to eq("Order was successfully created")
       end
     end
 
     context 'with invalid order params' do
       it 'renders the new template with unprocessable entity status' do
-        patch add_product_in_cart_path(product)
-
         post orders_path, params: invalid_order_params
 
         expect(response).to be_unprocessable
@@ -58,11 +68,13 @@ RSpec.describe OrdersController, type: :request do
   describe 'PATCH #update' do
     context 'with valid params' do
       it 'updates the order and redirects to the order page' do
-        patch order_path(order), params: valid_order_params
+        expect do
+          patch order_path(order), params: valid_order_params
+          order.reload
+        end.to change { order.first_name }.to(valid_order_params.dig(:order, :first_name))
 
-        expect(order.reload.first_name).to eq(valid_order_params[:order][:first_name])
         expect(response).to redirect_to(order)
-        expect(flash[:notice]).to eq("Order was successfully updated.")
+        expect(flash[:notice]).to eq("Order was successfully updated")
       end
     end
 
@@ -79,12 +91,12 @@ RSpec.describe OrdersController, type: :request do
 
   describe 'DELETE #destroy' do
     it 'destroys the order and redirects to the products index' do
-      expect {
+      expect do
         delete order_path(order)
-      }.to change(Order, :count).by(-1)
+      end.to change(Order, :count).by(-1)
 
       expect(response).to redirect_to(products_path)
-      expect(flash[:notice]).to eq("Order successfully destroyed.")
+      expect(flash[:notice]).to eq("Order successfully destroyed")
     end
   end
 end

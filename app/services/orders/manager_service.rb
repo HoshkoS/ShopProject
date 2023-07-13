@@ -1,5 +1,4 @@
 class Orders::ManagerService
-
   def initialize(cart, order, current_session)
     @cart = cart
     @order = order
@@ -7,11 +6,12 @@ class Orders::ManagerService
   end
 
   def call
-    create_product_relations
-
-    decrease_product_balance
-
-    clean_cart
+    if create_product_relations
+      decrease_product_balance
+      clean_cart
+    else
+      # do something to show something went wrong
+    end
   end
 
   private

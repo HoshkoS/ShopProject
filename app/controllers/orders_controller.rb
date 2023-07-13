@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     if @order.save
       Orders::ManagerService.new(session[:products], @order, session).call
 
-      redirect_to order_path(@order), notice: "Order was successfully created."
+      redirect_to order_path(@order), notice: "Order was successfully created"
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
     @order = resourse
 
     if @order.update(order_params)
-      redirect_to @order, notice: "Order was successfully updated."
+      redirect_to @order, notice: "Order was successfully updated"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class OrdersController < ApplicationController
   def destroy
     resourse.destroy
 
-    redirect_to products_path, notice: "Order successfully destroyed."
+    redirect_to products_path, notice: "Order successfully destroyed"
   end
 
   private

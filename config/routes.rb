@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root "products#index"
 
-  resources :products do
+  resources :products, only: [:index, :show] do
     member do
       resource :cart, only: [] do
         [:add, :remove, :change_amount].each do |action|

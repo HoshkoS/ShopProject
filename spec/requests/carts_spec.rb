@@ -8,10 +8,12 @@ RSpec.describe CartsController, type: :request do
       get cart_path
 
       expect(response).to be_successful
+      expect(response.body).to include("Your cart is empty")
     end
 
     it "renders the cart page with product" do
       patch add_product_in_cart_path(product)
+
       get cart_path
 
       expect(response).to be_successful
@@ -19,58 +21,40 @@ RSpec.describe CartsController, type: :request do
     end
   end
 
-  describe "PATCH #buy" do
-    it "adds the product to the cart" do
-      patch add_product_in_cart_path(product)
+  describe "PATCH #add" do
+    it "adds the product to the cart and redirects back to the previous page" do
+      patch add_product_in_cart_path(product), headers: { 'HTTP_REFERER' => products_path }
 
-      expect(session.dig(:products, product.id.to_s)).to be_present
-    end
-
-    it "redirects back to the previous page" do
-      patch add_product_in_cart_path(product)
-
-      expect(response).to redirect_to(request.referrer || root_path)
+      expect(session.dig(:products)).to include(product.id.to_s)
+      expect(response).to redirect_to(products_path)
     end
   end
 
   describe "PATCH #change_amount" do
-    let(:amount) { 5 }
+    let(:amount) { 2 }
 
-    it "changes the product amount in the cart" do
-      patch change_amount_product_in_cart_path(product), params: { amount: }
-      expect(session.dig(:products, product.id.to_s)).to eq(amount)
-    end
+    it "changes the product amount in the cart and redirects back to the previous page" do
+      patch change_amount_product_in_cart_path(product), params: { amount: }, headers: { 'HTTP_REFERER' => cart_path }
 
-    it "redirects back to the previous page" do
-      patch change_amount_product_in_cart_path(product), params: { amount: }
-      expect(response).to redirect_to(request.referrer || root_path)
+      expect(session.dig(:products)).to include(product.id.to_s => amount)
+      expect(response).to redirect_to(cart_path)
     end
   end
 
-  describe "PATCH #cancel_delivery" do
-    it "removes the product from the cart" do
-      patch remove_product_in_cart_path(product)
+  describe "PATCH #remove" do
+    it "removes the product from the cart and redirects back to the previous page" do
+      patch remove_product_in_cart_path(product), headers: { 'HTTP_REFERER' => cart_path }
 
       expect(session[:products]).to be_nil
-    end
-
-    it "redirects back to the previous page" do
-      patch remove_product_in_cart_path(product)
-
-      expect(response).to redirect_to(request.referrer || root_path)
+      expect(response).to redirect_to(cart_path)
     end
   end
 
   describe "DELETE #destroy" do
-    it "clears the cart" do
+    it "clears the cart and redirects to the products page" do
       delete cart_path(1)
 
       expect(session[:products]).to be_nil
-    end
-
-    it "redirects to the products page" do
-      delete cart_path(1)
-
       expect(response).to redirect_to(products_path)
     end
   end
