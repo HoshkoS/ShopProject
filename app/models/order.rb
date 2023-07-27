@@ -7,7 +7,7 @@ class Order < ApplicationRecord
   scope :ordered, -> { order(last_name: :asc) }
 
   def full_name
-    "#{first_name} #{last_name}"
+    first_name.concat(" ", last_name)
   end
 
   def product_sum(product)

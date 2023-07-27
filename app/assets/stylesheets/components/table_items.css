@@ -1,3 +1,5 @@
-.table-item {
-  @apply px-6 py-4;
+@layer components {
+  .table-item {
+    @apply px-6 py-4;
+  }
 }

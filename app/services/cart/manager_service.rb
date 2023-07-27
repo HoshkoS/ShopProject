@@ -13,7 +13,6 @@ class Cart::ManagerService
       balance: Product.find(params[:id]).balance
     }
     action = params[:update_action].classify
-
     service = "Cart::#{action}Service".constantize
 
     service.new(session, product).call

@@ -20,7 +20,7 @@
                   <td class="table-item"><%= render "carts/change_amount_form", product: product %></td>
                   <td class="table-item"><%= number_to_currency(@cart.product_sum(product), unit: "₴") %></td>
                   <td class="table-item">
-                    <%= button_to remove_product_in_cart_path(product), method: :patch do %>
+                    <%= button_to remove_product_in_cart_path(product), method: :patch, form_class: 'delete-alertbox' do %>
                         <i class="fa fa-regular fa-trash fa-2x"></i>
                     <% end %>
                   </td>

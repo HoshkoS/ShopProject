@@ -6,6 +6,8 @@ class OrdersController < ApplicationController
   end
 
   def new
+    @session_manager = Cart::ManagerService.new(session, params)
+
     @order = Order.new
   end
 
@@ -21,6 +23,8 @@ class OrdersController < ApplicationController
 
       redirect_to order_path(@order), notice: "Order was successfully created"
     else
+      @session_manager = Cart::ManagerService.new(session, params)
+
       render :new, status: :unprocessable_entity
     end
   end
@@ -57,7 +61,5 @@ class OrdersController < ApplicationController
 
   def check_cart
     redirect_to products_path, notice: "Your cart is empty yet" if session[:products].blank?
-
-    @session_manager = Cart::ManagerService.new(session, params)
   end
 end
