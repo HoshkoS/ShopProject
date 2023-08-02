@@ -28,8 +28,11 @@ RSpec.describe OrdersController, type: :request do
     end
 
     context 'with product in cart' do
-      it 'sets products and initializes a new order' do
+      before do
         patch add_product_in_cart_path(product)
+      end
+
+      it 'sets products and initializes a new order' do
         get new_order_path
 
         expect(response).to be_successful

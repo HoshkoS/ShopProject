@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
-  before_action :init_cart
+  before_action :init_cart, only: :update
+  before_action :check_cart, only: :show
 
   def show
     @cart = Cart::ManagerService.new(session, cart_params)
@@ -21,6 +22,10 @@ class CartsController < ApplicationController
 
   def init_cart
     session[:products] = {} if session[:products].blank?
+  end
+
+  def check_cart
+    redirect_to products_path, notice: "Your cart is empty yet" if session[:products].blank?
   end
 
   def cart_params

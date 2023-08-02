@@ -4,11 +4,11 @@ RSpec.describe CartsController, type: :request do
   let!(:product) { create(:product) }
 
   describe "GET /cart" do
-    it "renders the empty cart page" do
+    it "redirects back to products page when the cart is empty" do
       get cart_path
 
-      expect(response).to be_successful
-      expect(response.body).to include("Your cart is empty")
+      expect(response).to redirect_to(products_path)
+      expect(flash[:notice]).to eq("Your cart is empty yet")
     end
 
     it "renders the cart page with product" do
