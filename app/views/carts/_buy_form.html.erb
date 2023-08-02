@@ -1,0 +1,4 @@
+<%= form_with url: add_product_in_cart_path(product), method: :patch do |f| %>
+  <%= f.number_field :amount, min: 1, value: 1, class: 'input-field w-24 h-9 inline-block' %>
+  <%= f.submit "Add to cart", class: 'btn-blue' %>
+<% end %>

@@ -1,0 +1,8 @@
+@layer components {
+  .notice-flash {
+    @apply px-3 py-2 mb-5 font-medium text-center text-green-600 rounded-lg bg-green-50;
+  }
+  .alert-flash {
+    @apply px-3 py-2 mb-5 font-medium text-center text-red-800 rounded-lg bg-red-50;
+  }
+}
